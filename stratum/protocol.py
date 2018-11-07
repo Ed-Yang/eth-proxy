@@ -6,12 +6,12 @@ from twisted.protocols.basic import LineOnlyReceiver
 from twisted.internet import defer, reactor, error
 from twisted.python.failure import Failure
 
-import stats
-import custom_exceptions
-import connection_registry
-import settings
+import stratum.stats as stats# Python3
+import stratum.custom_exceptions as custom_exceptions # Python3
+import stratum.connection_registry as connection_registry # Python3
+import stratum.settings as settings # Python3
 
-import logger
+import stratum.logger as logger # Python3
 log = logger.get_logger('protocol')
 
 class RequestCounter(object):
@@ -84,11 +84,13 @@ class Protocol(LineOnlyReceiver):
         '''Overwrite this if transport needs some extra care about data written
         to the socket, like adding message format in websocket.''' 
         try:
-            self.transport.write(data)
+            self.transport.write(data.encode('utf-8')) # Python3
         except AttributeError:
             # Transport is disconnected
             pass
-        
+        except: # Python3
+            print("transport_write error !!!") # Python3
+
     def connectionLost(self, reason):
         if self.on_disconnect != None and not self.on_disconnect.called:
             self.on_disconnect.callback(self)
@@ -161,8 +163,12 @@ class Protocol(LineOnlyReceiver):
         if request_counter == None:
             request_counter = RequestCounter()
             
-        lines  = (self._buffer+data).split(self.delimiter)
-        self._buffer = lines.pop(-1)
+        #lines  = (self._buffer+data).split(self.delimiter) # Python3
+        #self._buffer = lines.pop(-1) # Python3
+        
+        # FIXME: need to check the matter of _buffer
+        lines  = (data).decode('utf-8').split(self.delimiter) # Python3
+
         request_counter.set_count(len(lines))
         self.on_finish = request_counter.on_finish
 

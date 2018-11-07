@@ -1,6 +1,6 @@
 import weakref
 from twisted.internet import reactor
-from services import GenericService
+from stratum.services import GenericService # Python3
 
 class ConnectionRegistry(object):
     __connections = weakref.WeakKeyDictionary()
@@ -14,7 +14,7 @@ class ConnectionRegistry(object):
         try:
             del cls.__connections[conn]
         except:
-            print "Warning: Cannot remove connection from ConnectionRegistry"  
+            print ("Warning: Cannot remove connection from ConnectionRegistry")  # Python3 
         
     @classmethod
     def get_session(cls, conn):

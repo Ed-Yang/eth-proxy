@@ -4,7 +4,7 @@ import hashlib
 import weakref
 import re
 
-import custom_exceptions
+import stratum.custom_exceptions # Python3
 
 VENDOR_RE = re.compile(r'\[(.*)\]')
 

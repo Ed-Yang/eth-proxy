@@ -1,8 +1,8 @@
 from twisted.internet import defer
 
 from stratum import settings
-import stratum.logger
-log = stratum.logger.get_logger('proxy')
+import stratum.logger as logger # Python3
+log = logger.get_logger('proxy') # Python3
 
 class Job(object):
     def __init__(self):
@@ -65,7 +65,7 @@ class JobRegistry(object):
             (not self.f.is_connected and not is_main_pool and self.f3 and self.f3.is_connected and is_failover_pool3 and not self.f1.is_connected and not self.f2.is_connected):
             if self.jobs and self.jobs.params and self.jobs.params[0]==newjob.params[0]:
                 return
-            if stratum.logger.settings.DEBUG:
+            if logger.settings.DEBUG: # Python3
                 log.debug("%s %s" % (log_text, newjob.params))
             else:
                 log.info(log_text)
@@ -74,7 +74,7 @@ class JobRegistry(object):
             on_block = self.on_block
             self.on_block = defer.Deferred()
             on_block.callback(True)
-        elif stratum.logger.settings.DEBUG:
+        elif logger.settings.DEBUG: # Python3
             log.debug("%s NOT_USED %s" % (log_text, newjob.params))
 
     def submit(self, method, params, worker_name):

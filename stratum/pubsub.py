@@ -1,6 +1,6 @@
 import weakref
-from connection_registry import ConnectionRegistry
-import custom_exceptions
+from stratum.connection_registry import ConnectionRegistry # Python3
+import stratum.custom_exceptions # Python3
 import hashlib
 
 def subscribe(func):
@@ -138,7 +138,7 @@ class Pubsub(object):
             # because it uses weak reference there.
             del session['subscriptions'][key]
         except KeyError:
-            print "Warning: Cannot remove subscription from connection session"
+            print ("Warning: Cannot remove subscription from connection session") # Python3
             return False
             
         return True

@@ -34,7 +34,7 @@ def setup():
             value = getattr(cfg, varname)
             yield (varname, value)
 
-    import config_default
+    import stratum.config_default as config_default  # Python3
     
     if os.path.isfile('eth-proxy.conf'):
         config = open('eth-proxy.conf','r').readlines()
@@ -62,13 +62,13 @@ def setup():
             module.__dict__[name] = value
 
     if module.__dict__['DEBUG'] and changes:
-        print "----------------"
-        print "Custom settings:"
+        print ("----------------")  # Python3
+        print ("Custom settings:")  # Python3
         for k, v in changes.items():
             if 'passw' in k.lower():
-                print k, ": ********"
+                print (k, ": ********")  # Python3
             else:
-                print k, ":", v
-        print "----------------"
+                print (k, ":", v)
+        print ("----------------")  # Python3
 
 setup()

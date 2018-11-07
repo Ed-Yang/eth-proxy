@@ -3,12 +3,12 @@ def setup(setup_event=None):
         from twisted.internet import epollreactor
         epollreactor.install()
     except ImportError:
-        print "Failed to install epoll reactor, default reactor will be used instead."
+        print ("Failed to install epoll reactor, default reactor will be used instead.") # Python3
     
     try:
-        import settings
+        import stratum.settings as settings # Python3
     except ImportError:
-        print "***** Is configs.py missing? Maybe you want to copy and customize config_default.py?"
+        print ("***** Is configs.py missing? Maybe you want to copy and customize config_default.py?") # Python3
 
     from twisted.application import service
     application = service.Application("stratum-server")
@@ -51,8 +51,8 @@ def setup_finalize(event, application):
         sslContext = ssl.DefaultOpenSSLContextFactory(settings.SSL_PRIVKEY, settings.SSL_CACERT)
     except OpenSSL.SSL.Error:
         sslContext = None
-        print "Cannot initiate SSL context, are SSL_PRIVKEY or SSL_CACERT missing?"
-        print "This will skip all SSL-based transports."
+        print ("Cannot initiate SSL context, are SSL_PRIVKEY or SSL_CACERT missing?") # Python3
+        print ("This will skip all SSL-based transports.") # Python3
         
     # Set up thread pool size for service threads
     reactor.suggestThreadPoolSize(settings.THREAD_POOL_SIZE) 
@@ -106,4 +106,4 @@ def setup_finalize(event, application):
     return event
 
 if __name__ == '__main__':
-    print "This is not executable script. Try 'twistd -ny launcher.tac instead!"
+    print ("This is not executable script. Try 'twistd -ny launcher.tac instead!") # Python3

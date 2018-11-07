@@ -3,7 +3,7 @@
 
 import socket
 import struct
-from zope.interface import implements
+from zope.interface import Interface, implementer  # Python3
 from twisted.internet import defer
 from twisted.internet.interfaces import IStreamClientEndpoint
 from twisted.internet.protocol import Protocol, ClientFactory
@@ -76,8 +76,9 @@ class SOCKSv4ClientFactory(ClientFactory):
         r.handshakeDone = self.handshakeDone
         return r
 
+@implementer(IStreamClientEndpoint) # Python3
 class SOCKSWrapper(object):
-    implements(IStreamClientEndpoint)
+    #implements(IStreamClientEndpoint) # Python3
     factory = SOCKSv4ClientFactory
 
     def __init__(self, reactor, host, port, endpoint):

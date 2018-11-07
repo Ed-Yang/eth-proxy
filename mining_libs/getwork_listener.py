@@ -5,8 +5,8 @@ from twisted.internet import defer, threads
 from twisted.web.resource import Resource
 from twisted.web.server import NOT_DONE_YET
 
-import stratum.logger
-log = stratum.logger.get_logger('proxy')
+import stratum.logger as logger # Python3
+log = logger.get_logger('proxy') # Python3
 
 class Root(Resource):
     isLeaf = True
@@ -36,7 +36,7 @@ class Root(Resource):
             request.finish()
             return NOT_DONE_YET
 
-        if not data.has_key('method'):
+        if 'method' not in  data: # Python3
             response = self.json_error(data.get('id'), "Need methods")+'\n'
         elif data['method'] == 'eth_getWork':
             if self.getWorkCacheTimeout["work"]==self.job_registry.jobs.params[0] and int(time.time())-self.getWorkCacheTimeout["time"]>=self.job_registry.coinTimeout:
@@ -67,7 +67,7 @@ class Root(Resource):
             response = self.json_error(data.get('id'), "Unsupported method '%s'" % data['method'])
 
         try:
-            request.write(response+'\n')
+            request.write(response.encode('utf-8') + b'\n') # Python3
             request.finish()
             return NOT_DONE_YET
         except Exception:

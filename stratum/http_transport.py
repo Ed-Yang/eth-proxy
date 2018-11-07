@@ -12,7 +12,7 @@ from protocol import Protocol, RequestCounter
 from event_handler import GenericEventHandler
 import settings
 
-import logger
+import stratum.logger as logger # Python3
 log = logger.get_logger('http_transport')
 
 class Transport(object):
@@ -122,7 +122,7 @@ class HttpSession(Session):
     @classmethod
     def on_expire(cls, sess_obj):
         # FIXME: Close protocol connection
-        print "EXPIRING SESSION", sess_obj
+        print ("EXPIRING SESSION", sess_obj) # Python3
         
         if sess_obj.protocol:
             sess_obj.protocol.connectionLost(Failure(Exception("HTTP session closed")))

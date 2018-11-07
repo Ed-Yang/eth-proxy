@@ -1,11 +1,11 @@
 from twisted.internet import reactor
 
 from stratum.event_handler import GenericEventHandler
-from jobs import Job
-import version as _version
+from mining_libs.jobs import Job # Python3
+import mining_libs.version as _version # Python3
 
-import stratum.logger
-log = stratum.logger.get_logger('proxy')
+import stratum.logger as logger # Python3
+log = logger.get_logger('proxy') # Python3
 
 class ClientMiningService(GenericEventHandler):
     job_registry = None # Reference to JobRegistry instance

@@ -1,5 +1,5 @@
 import time
-import logger
+import stratum.logger as logger # Python3
 log = logger.get_logger('stats')
 
 class PeerStats(object):

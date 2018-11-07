@@ -2,9 +2,9 @@
 
 import os
 import logging
-from twisted.python import log as twisted_log
+#from twisted.python import log as twisted_log # Python3
 
-import settings
+import stratum.settings as settings  # Python3
 
 '''
 class Logger(object):

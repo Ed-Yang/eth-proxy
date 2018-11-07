@@ -6,9 +6,9 @@ import os
 import sys
 import socket
 
-from stratum import settings
-import stratum.logger
-log = stratum.logger.get_logger('proxy')
+import stratum.settings as settings # Python3
+import stratum.logger as logger # Python3
+log = logger.get_logger('proxy') # Python3
 
 if __name__ == '__main__':
     if len(settings.WALLET)!=42 and len(settings.WALLET)!=40:
@@ -148,6 +148,7 @@ def main():
         conn.socket.setsockopt(socket.SOL_TCP, socket.TCP_KEEPINTVL, 1) # Interval in seconds between keepalive probes
         conn.socket.setsockopt(socket.SOL_TCP, socket.TCP_KEEPCNT, 5) # Failed keepalive probles before declaring other end dead
     except:
+        print('setsockopt error !!!') # Python3
         pass # Some socket features are not available on all platforms (you can guess which one)
 
     log.warning("-----------------------------------------------------------------------")
@@ -166,7 +167,7 @@ def main():
     log.warning("-----------------------------------------------------------------------")
 
 if __name__ == '__main__':
-    fp = file("eth-proxy.pid", 'w')
+    fp = open("eth-proxy.pid", 'w') # Python3
     fp.write(str(os.getpid()))
     fp.close()
     main()
